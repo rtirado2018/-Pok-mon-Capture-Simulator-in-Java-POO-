@@ -1,12 +1,15 @@
 package CaptureClasses;
 
+import java.text.Normalizer;
+
 public class Captura {
 
     private Pokemon pokemon;
     private Pokeball pokeball;
 
     public Captura() {
-
+        this.pokemon = new Pokemon();
+        this.pokeball = new PokeBall();
     }
 
     public Captura(Pokemon pokemon, Pokeball pokeball) {
@@ -97,5 +100,53 @@ public class Captura {
                 return new PokeBall(); // tu clase concreta
         }
     }
+
+    public static boolean esNombreValido(String nombre) {
+        String[] pokemonesValidos = {
+            "Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Mewtwo", "Articuno"
+        };
+
+        for (String p : pokemonesValidos) {
+            if (p.equalsIgnoreCase(nombre.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean esEstadoValido(String estadoTexto) {
+        String[] estadosValidos = {
+            "Ninguno", "Paralizado", "Envenenado", "Congelado", "Dormido", "Quemado"
+        };
+
+        for (String p : estadosValidos) {
+            if (p.equalsIgnoreCase(estadoTexto.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+public static boolean esPokeballValida(String pokeballTexto) {
+    String[] pokeballValidas = {
+        "Pokeball", "SuperBall", "UltraBall", "VelozBall", "BuceoBall", "TurnoBall"
+    };
+
+    // Quitamos tildes y pasamos todo a minúsculas
+    String textoNormalizado = normalizar(pokeballTexto);
+
+    for (String p : pokeballValidas) {
+        if (normalizar(p).equalsIgnoreCase(textoNormalizado)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+private static String normalizar(String texto) {
+    return Normalizer.normalize(texto, Normalizer.Form.NFD)
+                     .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                     .toLowerCase().trim();
+}
 
 }

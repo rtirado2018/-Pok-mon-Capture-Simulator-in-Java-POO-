@@ -12,7 +12,7 @@ public class Pokemon {
         this.nombre = "MissingNO.";
         this.nivel = 255;
         this.PSMax = 999;
-        this.PSActual = 1;
+        this.PSActual = 999;
         this.ratioCaptura = 255;
         this.estado = new EstadoNinguno();
 
@@ -20,7 +20,7 @@ public class Pokemon {
 
     public Pokemon(String nombre, int nivel, int PSActual, Estado estado) {
         this.nombre = nombre;
-        this.nivel = nivel;
+        this.nivel = Math.max(1, Math.min(nivel, 100));
         this.PSMax = PokemonPS.calcularPSMax(nombre, nivel);
         this.PSActual = Math.max(1, Math.min(PSActual, this.PSMax));
         this.ratioCaptura = CaptureRatio.getOrDefault(nombre, 100);
@@ -79,6 +79,8 @@ public class Pokemon {
     public void recalcularPSMax() {
     this.PSMax = PokemonPS.calcularPSMax(nombre, nivel);
 }
+    
+    
     
 
 
